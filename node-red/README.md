@@ -41,8 +41,8 @@ abgelegt. Der SoC wird aus dem bereits vorhandenen `flow.ESS_SoC` verwendet.
 In der Function **`Nachtentladung Regelung`** oben anpassen:
 
 ```js
-const CAPACITY_WH = 15000; // Akku-Nutzkapazität in Wh – UNBEDINGT anpassen!
-const P_MAX       = 4000;  // max. Entladeleistung des Wechselrichters (W)
+const CAPACITY_WH = 16000; // Akku-Nutzkapazität in Wh
+const P_MAX       = 3800;  // max. Entladeleistung des Wechselrichters (W)
 const SOC_TARGET  = 10;    // Ziel-SoC (%)
 const GRID_TARGET = 0;     // Ziel-Netzleistung (W); 0 = kein Bezug
 ```
