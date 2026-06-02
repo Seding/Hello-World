@@ -1,0 +1,1487 @@
+[
+    {
+        "id": "b7965650bcd47c18",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "0ae837e145590c6e",
+        "type": "victron-input-battery",
+        "z": "b7965650bcd47c18",
+        "service": "com.victronenergy.battery/512",
+        "path": "/Dc/0/Power",
+        "serviceObj": {
+            "service": "com.victronenergy.battery/512",
+            "name": "JK-BMS"
+        },
+        "pathObj": {
+            "path": "/Dc/0/Power",
+            "type": "float",
+            "name": "Battery power (W)"
+        },
+        "name": "",
+        "onlyChanges": false,
+        "x": 140,
+        "y": 240,
+        "wires": [
+            [
+                "0af0c00a6e9b6e65"
+            ]
+        ]
+    },
+    {
+        "id": "0af0c00a6e9b6e65",
+        "type": "mqtt out",
+        "z": "b7965650bcd47c18",
+        "name": "Power",
+        "topic": "PV/Batterie/Power",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b4bc295ffa5f0d42",
+        "x": 730,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "0bdd0f28d2975bb1",
+        "type": "comment",
+        "z": "b7965650bcd47c18",
+        "name": "Akku Werte nach HomeAssistant pushen",
+        "info": "",
+        "x": 160,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "1ef93d1902fcbd30",
+        "type": "victron-input-battery",
+        "z": "b7965650bcd47c18",
+        "service": "com.victronenergy.battery/512",
+        "path": "/Soc",
+        "serviceObj": {
+            "service": "com.victronenergy.battery/512",
+            "name": "JK-BMS"
+        },
+        "pathObj": {
+            "path": "/Soc",
+            "type": "float",
+            "name": "State of charge (%)"
+        },
+        "name": "",
+        "onlyChanges": false,
+        "x": 140,
+        "y": 180,
+        "wires": [
+            [
+                "b3aeb2d3e8f7d12f"
+            ]
+        ]
+    },
+    {
+        "id": "66631685a0e4b49c",
+        "type": "mqtt out",
+        "z": "b7965650bcd47c18",
+        "name": "SoC",
+        "topic": "PV/Batterie/SoC",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b4bc295ffa5f0d42",
+        "x": 730,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "e8a9650f968cf6b0",
+        "type": "victron-input-battery",
+        "z": "b7965650bcd47c18",
+        "service": "com.victronenergy.battery/512",
+        "path": "/History/ChargedEnergy",
+        "serviceObj": {
+            "service": "com.victronenergy.battery/512",
+            "name": "JK-BMS"
+        },
+        "pathObj": {
+            "path": "/History/ChargedEnergy",
+            "type": "float",
+            "name": "Charged Energy (kWh)"
+        },
+        "name": "",
+        "onlyChanges": false,
+        "roundValues": "2",
+        "x": 150,
+        "y": 300,
+        "wires": [
+            [
+                "60da76c3b8595e3e"
+            ]
+        ]
+    },
+    {
+        "id": "9bf7cab4be385627",
+        "type": "victron-input-battery",
+        "z": "b7965650bcd47c18",
+        "service": "com.victronenergy.battery/512",
+        "path": "/History/DischargedEnergy",
+        "serviceObj": {
+            "service": "com.victronenergy.battery/512",
+            "name": "JK-BMS"
+        },
+        "pathObj": {
+            "path": "/History/DischargedEnergy",
+            "type": "float",
+            "name": "Discharged Energy (kWh)"
+        },
+        "name": "",
+        "onlyChanges": false,
+        "roundValues": "2",
+        "x": 160,
+        "y": 360,
+        "wires": [
+            [
+                "ba5720d2cd1e1af4"
+            ]
+        ]
+    },
+    {
+        "id": "60da76c3b8595e3e",
+        "type": "mqtt out",
+        "z": "b7965650bcd47c18",
+        "name": "Charged_Energy_kWh",
+        "topic": "PV/Batterie/Charged_Energy_kWh",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b4bc295ffa5f0d42",
+        "x": 780,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "ba5720d2cd1e1af4",
+        "type": "mqtt out",
+        "z": "b7965650bcd47c18",
+        "name": "Dicharged_Energy_kWh",
+        "topic": "PV/Batterie/Dicharged_Energy_kWh",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b4bc295ffa5f0d42",
+        "x": 790,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "67f371685623c8a6",
+        "type": "victron-input-battery",
+        "z": "b7965650bcd47c18",
+        "service": "com.victronenergy.battery/512",
+        "path": "/Dc/0/Current",
+        "serviceObj": {
+            "service": "com.victronenergy.battery/512",
+            "name": "JK-BMS"
+        },
+        "pathObj": {
+            "path": "/Dc/0/Current",
+            "type": "float",
+            "name": "Battery current (A)"
+        },
+        "name": "",
+        "onlyChanges": false,
+        "roundValues": "2",
+        "x": 140,
+        "y": 420,
+        "wires": [
+            [
+                "c2c03b4b5795afc5"
+            ]
+        ]
+    },
+    {
+        "id": "2bdb42fea24299d0",
+        "type": "victron-input-battery",
+        "z": "b7965650bcd47c18",
+        "service": "com.victronenergy.battery/512",
+        "path": "/Dc/0/Voltage",
+        "serviceObj": {
+            "service": "com.victronenergy.battery/512",
+            "name": "JK-BMS"
+        },
+        "pathObj": {
+            "path": "/Dc/0/Voltage",
+            "type": "float",
+            "name": "Battery voltage (V)"
+        },
+        "name": "",
+        "onlyChanges": false,
+        "roundValues": "2",
+        "x": 140,
+        "y": 480,
+        "wires": [
+            [
+                "f81386932cf4b247"
+            ]
+        ]
+    },
+    {
+        "id": "2e3536effdc6a955",
+        "type": "victron-input-battery",
+        "z": "b7965650bcd47c18",
+        "service": "com.victronenergy.battery/512",
+        "path": "/Dc/0/Temperature",
+        "serviceObj": {
+            "service": "com.victronenergy.battery/512",
+            "name": "JK-BMS"
+        },
+        "pathObj": {
+            "path": "/Dc/0/Temperature",
+            "type": "float",
+            "name": "Battery temperature (°C)"
+        },
+        "name": "",
+        "onlyChanges": false,
+        "roundValues": "2",
+        "x": 160,
+        "y": 540,
+        "wires": [
+            [
+                "a209269f7fae5d06"
+            ]
+        ]
+    },
+    {
+        "id": "c2c03b4b5795afc5",
+        "type": "mqtt out",
+        "z": "b7965650bcd47c18",
+        "name": "Batterie_Current(A)",
+        "topic": "PV/Batterie/Batterie_Current(A)",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b4bc295ffa5f0d42",
+        "x": 770,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "f81386932cf4b247",
+        "type": "mqtt out",
+        "z": "b7965650bcd47c18",
+        "name": "Batterie_Voltage(V)",
+        "topic": "PV/Batterie/Batterie_Voltage(V)",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b4bc295ffa5f0d42",
+        "x": 770,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "a209269f7fae5d06",
+        "type": "mqtt out",
+        "z": "b7965650bcd47c18",
+        "name": "Batterie_Temperature",
+        "topic": "PV/Batterie/Batterie_Temperature",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b4bc295ffa5f0d42",
+        "x": 780,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "0c61f4b3c8fb0f7f",
+        "type": "victron-input-battery",
+        "z": "b7965650bcd47c18",
+        "service": "com.victronenergy.battery/512",
+        "path": "/System/MaxCellVoltage",
+        "serviceObj": {
+            "service": "com.victronenergy.battery/512",
+            "name": "JK-BMS"
+        },
+        "pathObj": {
+            "path": "/System/MaxCellVoltage",
+            "type": "float",
+            "name": "System; maximum cell voltage (V DC)"
+        },
+        "name": "",
+        "onlyChanges": false,
+        "roundValues": "3",
+        "x": 200,
+        "y": 600,
+        "wires": [
+            [
+                "750fbe9c4d4e771a"
+            ]
+        ]
+    },
+    {
+        "id": "882481f4527426b9",
+        "type": "victron-input-battery",
+        "z": "b7965650bcd47c18",
+        "service": "com.victronenergy.battery/512",
+        "path": "/System/MinCellVoltage",
+        "serviceObj": {
+            "service": "com.victronenergy.battery/512",
+            "name": "JK-BMS"
+        },
+        "pathObj": {
+            "path": "/System/MinCellVoltage",
+            "type": "float",
+            "name": "System; minimum cell voltage (V DC)"
+        },
+        "name": "",
+        "onlyChanges": false,
+        "roundValues": "3",
+        "x": 200,
+        "y": 660,
+        "wires": [
+            [
+                "5fe2dde129e46363"
+            ]
+        ]
+    },
+    {
+        "id": "750fbe9c4d4e771a",
+        "type": "mqtt out",
+        "z": "b7965650bcd47c18",
+        "name": "Batterie_max_Cell_Voltage",
+        "topic": "PV/Batterie/Batterie_max_Cell_Voltage",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b4bc295ffa5f0d42",
+        "x": 800,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "5fe2dde129e46363",
+        "type": "mqtt out",
+        "z": "b7965650bcd47c18",
+        "name": "Batterie_min_Cell_Voltage",
+        "topic": "PV/Batterie/Batterie_min_Cell_Voltage",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b4bc295ffa5f0d42",
+        "x": 800,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "33bcea0aa7f86687",
+        "type": "victron-output-ess",
+        "z": "b7965650bcd47c18",
+        "service": "com.victronenergy.settings",
+        "path": "/Settings/CGwacs/Hub4Mode",
+        "serviceObj": {
+            "service": "com.victronenergy.settings",
+            "name": "Venus settings"
+        },
+        "pathObj": {
+            "path": "/Settings/CGwacs/Hub4Mode",
+            "type": "enum",
+            "name": "ESS mode",
+            "enum": {
+                "1": "Optimized mode or 'keep batteries charged' and phase compensation enabled",
+                "2": "Optimized mode or 'keep batteries charged' and phase compensation disabled",
+                "3": "External control"
+            },
+            "mode": "both"
+        },
+        "name": "",
+        "onlyChanges": false,
+        "x": 1240,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "f8f85fce3e6e5e8a",
+        "type": "inject",
+        "z": "b7965650bcd47c18",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "3",
+        "payloadType": "num",
+        "x": 90,
+        "y": 1340,
+        "wires": [
+            [
+                "33bcea0aa7f86687"
+            ]
+        ]
+    },
+    {
+        "id": "8086dd58cda4157a",
+        "type": "victron-output-ess",
+        "z": "b7965650bcd47c18",
+        "service": "com.victronenergy.vebus/276",
+        "path": "/Hub4/L1/AcPowerSetpoint",
+        "serviceObj": {
+            "service": "com.victronenergy.vebus/276",
+            "name": "MultiPlus-II 48/5000/70-50"
+        },
+        "pathObj": {
+            "path": "/Hub4/L1/AcPowerSetpoint",
+            "type": "integer",
+            "name": "AC Power L1 setpoint (W)",
+            "mode": "both"
+        },
+        "name": "",
+        "onlyChanges": false,
+        "x": 1100,
+        "y": 1460,
+        "wires": []
+    },
+    {
+        "id": "91dbd93fcfb605ac",
+        "type": "inject",
+        "z": "b7965650bcd47c18",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 07 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 90,
+        "y": 1300,
+        "wires": [
+            [
+                "33bcea0aa7f86687"
+            ]
+        ]
+    },
+    {
+        "id": "2710f364ce771d76",
+        "type": "inject",
+        "z": "b7965650bcd47c18",
+        "name": "Batterie mit 2000W entladen",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "-2000",
+        "payloadType": "num",
+        "x": 160,
+        "y": 1540,
+        "wires": [
+            [
+                "9e4ff9bee75af983"
+            ]
+        ]
+    },
+    {
+        "id": "844207cfc52eb11a",
+        "type": "victron-input-ess",
+        "z": "b7965650bcd47c18",
+        "service": "com.victronenergy.vebus/276",
+        "path": "/Hub4/L1/AcPowerSetpoint",
+        "serviceObj": {
+            "service": "com.victronenergy.vebus/276",
+            "name": "MultiPlus-II 48/5000/70-50"
+        },
+        "pathObj": {
+            "path": "/Hub4/L1/AcPowerSetpoint",
+            "type": "integer",
+            "name": "AC Power L1 setpoint (W)",
+            "mode": "both"
+        },
+        "name": "",
+        "onlyChanges": false,
+        "x": 220,
+        "y": 1580,
+        "wires": [
+            [
+                "0fbf379a2ed7eace"
+            ]
+        ]
+    },
+    {
+        "id": "0fbf379a2ed7eace",
+        "type": "debug",
+        "z": "b7965650bcd47c18",
+        "name": "debug 45",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 1560,
+        "wires": []
+    },
+    {
+        "id": "fa727095ca6740d8",
+        "type": "victron-input-ess",
+        "z": "b7965650bcd47c18",
+        "service": "com.victronenergy.settings",
+        "path": "/Settings/CGwacs/Hub4Mode",
+        "serviceObj": {
+            "service": "com.victronenergy.settings",
+            "name": "Venus settings"
+        },
+        "pathObj": {
+            "path": "/Settings/CGwacs/Hub4Mode",
+            "type": "enum",
+            "name": "ESS mode",
+            "enum": {
+                "1": "Optimized mode or 'keep batteries charged' and phase compensation enabled",
+                "2": "Optimized mode or 'keep batteries charged' and phase compensation disabled",
+                "3": "External control"
+            },
+            "mode": "both"
+        },
+        "name": "",
+        "onlyChanges": false,
+        "x": 130,
+        "y": 720,
+        "wires": [
+            [
+                "3993266c5c88bea2",
+                "b59068f8ff31ac31"
+            ]
+        ]
+    },
+    {
+        "id": "e0d849a0be421817",
+        "type": "victron-input-ess",
+        "z": "b7965650bcd47c18",
+        "service": "com.victronenergy.settings",
+        "path": "/Settings/CGwacs/BatteryLife/State",
+        "serviceObj": {
+            "service": "com.victronenergy.settings",
+            "name": "Venus settings"
+        },
+        "pathObj": {
+            "path": "/Settings/CGwacs/BatteryLife/State",
+            "type": "enum",
+            "name": "ESS state",
+            "enum": {
+                "1": "BatteryLife enabled (GUI controlled)",
+                "2": "Optimized Mode /w BatteryLife: self consumption",
+                "3": "Optimized Mode /w BatteryLife: self consumption, SoC exceeds 85%",
+                "4": "Optimized Mode /w BatteryLife: self consumption, SoC at 100%",
+                "5": "Optimized Mode /w BatteryLife: SoC below dynamic SoC limit",
+                "6": "Optimized Mode /w BatteryLife: SoC has been below SoC limit for more than 24 hours. Charging the battery (5A)",
+                "7": "Optimized Mode /w BatteryLife: Inverter/Charger is in sustain mode",
+                "8": "Optimized Mode /w BatteryLife: recharging, SoC dropped by 5% or more below the minimum SoC",
+                "9": "'Keep batteries charged' mode is enabled",
+                "10": "Optimized mode w/o BatteryLife: self consumption, SoC at or above minimum SoC",
+                "11": "Optimized mode w/o BatteryLife: self consumption, SoC is below minimum SoC",
+                "12": "Optimized mode w/o BatteryLife: recharging, SoC dropped by 5% or more below minimum SoC"
+            }
+        },
+        "name": "",
+        "onlyChanges": false,
+        "x": 130,
+        "y": 780,
+        "wires": [
+            [
+                "cddd7128f6e4c08f"
+            ]
+        ]
+    },
+    {
+        "id": "86c58b10513b344e",
+        "type": "mqtt out",
+        "z": "b7965650bcd47c18",
+        "name": "ESS_Mode",
+        "topic": "PV/Batterie/ESS_Mode",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b4bc295ffa5f0d42",
+        "x": 750,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "cddd7128f6e4c08f",
+        "type": "mqtt out",
+        "z": "b7965650bcd47c18",
+        "name": "ESS_State",
+        "topic": "PV/Batterie/ESS_State",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b4bc295ffa5f0d42",
+        "x": 750,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "3993266c5c88bea2",
+        "type": "debug",
+        "z": "b7965650bcd47c18",
+        "name": "debug 46",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "557f7c8e9ad0cb30",
+        "type": "switch",
+        "z": "b7965650bcd47c18",
+        "name": "",
+        "property": "ESS_Mode",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "3",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 610,
+        "y": 1460,
+        "wires": [
+            [
+                "3e36fcd44558580c",
+                "8086dd58cda4157a",
+                "7fed0d534806422b"
+            ]
+        ]
+    },
+    {
+        "id": "b59068f8ff31ac31",
+        "type": "change",
+        "z": "b7965650bcd47c18",
+        "name": "ESS_Mode",
+        "rules": [
+            {
+                "t": "set",
+                "p": "ESS_Mode",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 720,
+        "wires": [
+            [
+                "86c58b10513b344e"
+            ]
+        ]
+    },
+    {
+        "id": "9e4ff9bee75af983",
+        "type": "trigger",
+        "z": "b7965650bcd47c18",
+        "name": "",
+        "op1": "",
+        "op2": "0",
+        "op1type": "pay",
+        "op2type": "str",
+        "duration": "-2",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 400,
+        "y": 1460,
+        "wires": [
+            [
+                "557f7c8e9ad0cb30"
+            ]
+        ]
+    },
+    {
+        "id": "3e36fcd44558580c",
+        "type": "debug",
+        "z": "b7965650bcd47c18",
+        "name": "debug 47",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 1520,
+        "wires": []
+    },
+    {
+        "id": "26471a837be86dcc",
+        "type": "victron-output-ess",
+        "z": "b7965650bcd47c18",
+        "service": "com.victronenergy.vebus/276",
+        "path": "/Hub4/DisableCharge",
+        "serviceObj": {
+            "service": "com.victronenergy.vebus/276",
+            "name": "MultiPlus-II 48/5000/70-50"
+        },
+        "pathObj": {
+            "path": "/Hub4/DisableCharge",
+            "type": "enum",
+            "name": "Disable charge",
+            "enum": {
+                "0": "No",
+                "1": "Yes"
+            },
+            "mode": "both"
+        },
+        "name": "",
+        "onlyChanges": false,
+        "x": 850,
+        "y": 1700,
+        "wires": []
+    },
+    {
+        "id": "b3c287845829396b",
+        "type": "inject",
+        "z": "b7965650bcd47c18",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 00 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 90,
+        "y": 1740,
+        "wires": [
+            [
+                "26471a837be86dcc"
+            ]
+        ]
+    },
+    {
+        "id": "9592fd4d2dd812e9",
+        "type": "inject",
+        "z": "b7965650bcd47c18",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 09 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 90,
+        "y": 1700,
+        "wires": [
+            [
+                "26471a837be86dcc"
+            ]
+        ]
+    },
+    {
+        "id": "99ef3f0cbeb6266d",
+        "type": "inject",
+        "z": "b7965650bcd47c18",
+        "name": "Batterie mit 2000W laden",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "2000",
+        "payloadType": "num",
+        "x": 150,
+        "y": 1500,
+        "wires": [
+            [
+                "9e4ff9bee75af983"
+            ]
+        ]
+    },
+    {
+        "id": "438aa7450d94184a",
+        "type": "inject",
+        "z": "b7965650bcd47c18",
+        "name": "0 Watt",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 90,
+        "y": 1460,
+        "wires": [
+            [
+                "9e4ff9bee75af983"
+            ]
+        ]
+    },
+    {
+        "id": "b3aeb2d3e8f7d12f",
+        "type": "change",
+        "z": "b7965650bcd47c18",
+        "name": "ESS_SoC",
+        "rules": [
+            {
+                "t": "set",
+                "p": "ESS_SoC",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 180,
+        "wires": [
+            [
+                "66631685a0e4b49c"
+            ]
+        ]
+    },
+    {
+        "id": "7fed0d534806422b",
+        "type": "function",
+        "z": "b7965650bcd47c18",
+        "name": "function 1",
+        "func": "if (flow.get(\"ESS_SoC\") <= 10) {\n    msg.payload = 1\n} else {\n    msg.payload = flow.get(\"ESS_Mode\")\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 1400,
+        "wires": [
+            [
+                "a874a61a5f2ad9cb"
+            ]
+        ]
+    },
+    {
+        "id": "a874a61a5f2ad9cb",
+        "type": "rbe",
+        "z": "b7965650bcd47c18",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload",
+        "topi": "topic",
+        "x": 950,
+        "y": 1400,
+        "wires": [
+            [
+                "33bcea0aa7f86687"
+            ]
+        ]
+    },
+    {
+        "id": "135d30501f4b052d",
+        "type": "comment",
+        "z": "b7965650bcd47c18",
+        "name": "Werte von Homeassistant",
+        "info": "",
+        "x": 110,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "478e242a567e16ea",
+        "type": "mqtt in",
+        "z": "b7965650bcd47c18",
+        "name": "Multiplus2 Switch Position",
+        "topic": "PV/MP2/SwitchPosition",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "b4bc295ffa5f0d42",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 1040,
+        "wires": [
+            [
+                "2ec3ddbb4f9a90d5"
+            ]
+        ]
+    },
+    {
+        "id": "2ec3ddbb4f9a90d5",
+        "type": "victron-output-vebus",
+        "z": "b7965650bcd47c18",
+        "service": "com.victronenergy.vebus/276",
+        "path": "/Mode",
+        "serviceObj": {
+            "service": "com.victronenergy.vebus/276",
+            "name": "MultiPlus-II 48/5000/70-50"
+        },
+        "pathObj": {
+            "path": "/Mode",
+            "type": "enum",
+            "name": "Switch Position",
+            "enum": {
+                "1": "Charger Only",
+                "2": "Inverter Only",
+                "3": "On",
+                "4": "Off"
+            },
+            "mode": "both"
+        },
+        "name": "",
+        "onlyChanges": false,
+        "x": 850,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "cb06793c86b9d1d9",
+        "type": "victron-input-ess",
+        "z": "b7965650bcd47c18",
+        "service": "com.victronenergy.settings",
+        "path": "/Settings/CGwacs/BatteryLife/MinimumSocLimit",
+        "serviceObj": {
+            "service": "com.victronenergy.settings",
+            "name": "Venus settings"
+        },
+        "pathObj": {
+            "path": "/Settings/CGwacs/BatteryLife/MinimumSocLimit",
+            "type": "integer",
+            "name": "Minimum Discharge SOC (%)",
+            "mode": "both"
+        },
+        "name": "Minimum SoC",
+        "onlyChanges": false,
+        "x": 90,
+        "y": 840,
+        "wires": [
+            [
+                "543fbe2fa52aab7a"
+            ]
+        ]
+    },
+    {
+        "id": "543fbe2fa52aab7a",
+        "type": "mqtt out",
+        "z": "b7965650bcd47c18",
+        "name": "Minimum SoC",
+        "topic": "PV/Batterie/Minimum_SoC",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b4bc295ffa5f0d42",
+        "x": 760,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "265a2abf36f6a5bd",
+        "type": "victron-input-gridmeter",
+        "z": "b7965650bcd47c18",
+        "service": "com.victronenergy.grid/40",
+        "path": "/Ac/Power",
+        "serviceObj": {
+            "service": "com.victronenergy.grid/40",
+            "name": "VM-3P75CT HQ2419PKMRG"
+        },
+        "pathObj": {
+            "path": "/Ac/Power",
+            "type": "float",
+            "name": "Power (W)"
+        },
+        "name": "Grid Meter Power",
+        "onlyChanges": false,
+        "x": 100,
+        "y": 900,
+        "wires": [
+            [
+                "02255bb233b10661"
+            ]
+        ]
+    },
+    {
+        "id": "02255bb233b10661",
+        "type": "mqtt out",
+        "z": "b7965650bcd47c18",
+        "name": "Grid Meter Power",
+        "topic": "PV/Batterie/GridMeterPower",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b4bc295ffa5f0d42",
+        "x": 770,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "c2500ce0685e8fd7",
+        "type": "mqtt in",
+        "z": "b7965650bcd47c18",
+        "name": "MP2 Power L1 SetPoint",
+        "topic": "PV/MP2/PowerL1SetPoint",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "b4bc295ffa5f0d42",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 120,
+        "y": 1100,
+        "wires": [
+            [
+                "01c7fdfddbd8c4bb"
+            ]
+        ]
+    },
+    {
+        "id": "01c7fdfddbd8c4bb",
+        "type": "change",
+        "z": "b7965650bcd47c18",
+        "name": "Power L1 SetPoint",
+        "rules": [
+            {
+                "t": "set",
+                "p": "PowerL1SetPoint",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 1100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "abb08709a1376131",
+        "type": "function",
+        "z": "b7965650bcd47c18",
+        "name": "function 2",
+        "func": "let PowerL1SetPoint = flow.get(\"PowerL1SetPoint\");\nmsg.payload = PowerL1SetPoint*-1\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 1400,
+        "wires": [
+            [
+                "9e4ff9bee75af983"
+            ]
+        ]
+    },
+    {
+        "id": "83224aca685290ba",
+        "type": "inject",
+        "z": "b7965650bcd47c18",
+        "name": "",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 90,
+        "y": 1400,
+        "wires": [
+            [
+                "abb08709a1376131"
+            ]
+        ]
+    },
+    {
+        "id": "b4bc295ffa5f0d42",
+        "type": "mqtt-broker",
+        "name": "Synology MQTT Broler",
+        "broker": "192.168.0.16",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "5",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "a1b2c3d4e5f60001",
+        "type": "comment",
+        "z": "b7965650bcd47c18",
+        "name": "Nachtentladung Batterie auf 10% (00:00 - 07:00, kein Netzbezug)",
+        "info": "Entlaedt den Speicher von 00:00 bis 07:00 auf SOC_TARGET (10%).\nKein Netzbezug im Rahmen der Wechselrichter-Leistung: die Entladeleistung\nwird zyklisch gegen die Hauslast geregelt und ggf. erhoeht.\nZusaetzlich wird eine geplante Entladeleistung berechnet, um 10% bis 07:00\nzu erreichen (Ueberschuss wird ggf. ins Netz eingespeist).\n\nWICHTIG: HomeAssistant-Steuerung (PV/MP2/PowerL1SetPoint) im Fenster pausieren!\nKapazitaet/Leistungsgrenze in der Funktion 'Nachtentladung Regelung' anpassen.",
+        "x": 280,
+        "y": 1900,
+        "wires": []
+    },
+    {
+        "id": "a1b2c3d4e5f60002",
+        "type": "inject",
+        "z": "b7965650bcd47c18",
+        "name": "Start 00:00",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 00 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 1960,
+        "wires": [
+            [
+                "a1b2c3d4e5f60003"
+            ]
+        ]
+    },
+    {
+        "id": "a1b2c3d4e5f60003",
+        "type": "function",
+        "z": "b7965650bcd47c18",
+        "name": "Start Nachtentladung",
+        "func": "// ESS auf External control (3) und Steuergroessen initialisieren\nflow.set(\"NightDischargePower\", 0);\nflow.set(\"PowerL1SetPoint\", 0);\nnode.status({fill:\"blue\", shape:\"ring\", text:\"Nachtentladung gestartet\"});\nmsg.payload = 3;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 1960,
+        "wires": [
+            [
+                "33bcea0aa7f86687"
+            ]
+        ]
+    },
+    {
+        "id": "a1b2c3d4e5f60006",
+        "type": "inject",
+        "z": "b7965650bcd47c18",
+        "name": "Zyklische Pruefung (30s)",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "30",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 2020,
+        "wires": [
+            [
+                "a1b2c3d4e5f60007"
+            ]
+        ]
+    },
+    {
+        "id": "a1b2c3d4e5f60007",
+        "type": "function",
+        "z": "b7965650bcd47c18",
+        "name": "Nachtentladung Regelung",
+        "func": "// === Nachtentladung 00:00 - 07:00 auf SOC_TARGET, kein Netzbezug ===\nconst CAPACITY_WH = 15000; // <-- Akku-Nutzkapazitaet in Wh anpassen!\nconst P_MAX       = 4000;  // max. Entladeleistung Wechselrichter (W)\nconst SOC_TARGET  = 10;    // Ziel-SoC (%)\nconst GRID_TARGET = 0;     // Ziel-Netzleistung (W); 0 = kein Bezug\n\nconst now = new Date();\nconst minutes = now.getHours() * 60 + now.getMinutes();\nconst inWindow = (minutes >= 0 && minutes < 7 * 60);\n\n// Ausserhalb 00:00-07:00 nichts tun (Stop uebernimmt der 07:00-Inject)\nif (!inWindow) {\n    node.status({});\n    return [null, null];\n}\n\nconst soc  = Number(flow.get(\"ESS_SoC\"));\nconst grid = Number(flow.get(\"GridPower\")) || 0;   // + = Netzbezug\nlet   cur  = Number(flow.get(\"NightDischargePower\")) || 0;\n\n// Ziel erreicht -> Entladung stoppen, ESS zurueck auf Optimized (1)\nif (!isNaN(soc) && soc <= SOC_TARGET) {\n    flow.set(\"NightDischargePower\", 0);\n    flow.set(\"PowerL1SetPoint\", 0);\n    node.status({fill:\"green\", shape:\"dot\", text:\"Ziel \" + SOC_TARGET + \"% erreicht\"});\n    return [ {payload: 0}, {payload: 1} ];\n}\n\n// 1) geplante Entladeleistung, um bis 07:00 auf SOC_TARGET zu kommen\nconst hoursLeft = Math.max((7 * 60 - minutes) / 60, 0.1);\nconst energyWh  = Math.max(((isNaN(soc) ? 100 : soc) - SOC_TARGET) / 100 * CAPACITY_WH, 0);\nconst planned   = energyWh / hoursLeft;\n\n// 2) Hauslast-Deckung: aktuelle Last ~ aktuelle Entladung + Netzbezug\n//    Entladung mind. so gross wie Last -> kein Netzbezug\nconst coverLoad = cur + (grid - GRID_TARGET);\n\n// Groesserer der beiden Werte, auf Wechselrichtergrenze begrenzt\nlet mag = Math.max(planned, coverLoad, 0);\nmag = Math.min(mag, P_MAX);\n\nflow.set(\"NightDischargePower\", mag);\nflow.set(\"PowerL1SetPoint\", mag); // haelt 2s-Apply-Loop konsistent (HA pausiert)\n\nnode.status({fill:\"blue\", shape:\"dot\",\n    text:\"SoC \" + soc + \"% | Soll \" + Math.round(mag) + \"W | Netz \" + Math.round(grid) + \"W\"});\n\n// Ausgang 1: AcPowerSetpoint (negativ = entladen)\n// Ausgang 2: ESS-Mode 3 (External control) erneut bestaetigen\nreturn [ {payload: -Math.round(mag)}, {payload: 3} ];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 2020,
+        "wires": [
+            [
+                "8086dd58cda4157a"
+            ],
+            [
+                "33bcea0aa7f86687"
+            ]
+        ]
+    },
+    {
+        "id": "a1b2c3d4e5f60004",
+        "type": "inject",
+        "z": "b7965650bcd47c18",
+        "name": "Stop 07:00",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 07 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 2080,
+        "wires": [
+            [
+                "a1b2c3d4e5f60005"
+            ]
+        ]
+    },
+    {
+        "id": "a1b2c3d4e5f60005",
+        "type": "function",
+        "z": "b7965650bcd47c18",
+        "name": "Stop Nachtentladung",
+        "func": "// Entladung beenden: Sollwert 0, ESS zurueck auf Optimized (1)\nflow.set(\"NightDischargePower\", 0);\nflow.set(\"PowerL1SetPoint\", 0);\nnode.status({fill:\"grey\", shape:\"ring\", text:\"Nachtentladung beendet\"});\n// Ausgang 1: AcPowerSetpoint = 0 ; Ausgang 2: ESS-Mode 1\nreturn [ {payload: 0}, {payload: 1} ];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 2080,
+        "wires": [
+            [
+                "8086dd58cda4157a"
+            ],
+            [
+                "33bcea0aa7f86687"
+            ]
+        ]
+    },
+    {
+        "id": "a1b2c3d4e5f60008",
+        "type": "victron-input-gridmeter",
+        "z": "b7965650bcd47c18",
+        "service": "com.victronenergy.grid/40",
+        "path": "/Ac/Power",
+        "serviceObj": {
+            "service": "com.victronenergy.grid/40",
+            "name": "VM-3P75CT HQ2419PKMRG"
+        },
+        "pathObj": {
+            "path": "/Ac/Power",
+            "type": "float",
+            "name": "Power (W)"
+        },
+        "name": "Grid Power -> flow.GridPower",
+        "onlyChanges": false,
+        "x": 150,
+        "y": 2160,
+        "wires": [
+            [
+                "a1b2c3d4e5f60009"
+            ]
+        ]
+    },
+    {
+        "id": "a1b2c3d4e5f60009",
+        "type": "change",
+        "z": "b7965650bcd47c18",
+        "name": "set flow.GridPower",
+        "rules": [
+            {
+                "t": "set",
+                "p": "GridPower",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 2160,
+        "wires": [
+            []
+        ]
+    }
+]

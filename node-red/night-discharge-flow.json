@@ -1,0 +1,203 @@
+[
+    {
+        "id": "a1b2c3d4e5f60001",
+        "type": "comment",
+        "z": "b7965650bcd47c18",
+        "name": "Nachtentladung Batterie auf 10% (00:00 - 07:00, kein Netzbezug)",
+        "info": "Entlaedt den Speicher von 00:00 bis 07:00 auf SOC_TARGET (10%).\nKein Netzbezug im Rahmen der Wechselrichter-Leistung: die Entladeleistung\nwird zyklisch gegen die Hauslast geregelt und ggf. erhoeht.\nZusaetzlich wird eine geplante Entladeleistung berechnet, um 10% bis 07:00\nzu erreichen (Ueberschuss wird ggf. ins Netz eingespeist).\n\nWICHTIG: HomeAssistant-Steuerung (PV/MP2/PowerL1SetPoint) im Fenster pausieren!\nKapazitaet/Leistungsgrenze in der Funktion 'Nachtentladung Regelung' anpassen.",
+        "x": 280,
+        "y": 1900,
+        "wires": []
+    },
+    {
+        "id": "a1b2c3d4e5f60002",
+        "type": "inject",
+        "z": "b7965650bcd47c18",
+        "name": "Start 00:00",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 00 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 1960,
+        "wires": [
+            [
+                "a1b2c3d4e5f60003"
+            ]
+        ]
+    },
+    {
+        "id": "a1b2c3d4e5f60003",
+        "type": "function",
+        "z": "b7965650bcd47c18",
+        "name": "Start Nachtentladung",
+        "func": "// ESS auf External control (3) und Steuergroessen initialisieren\nflow.set(\"NightDischargePower\", 0);\nflow.set(\"PowerL1SetPoint\", 0);\nnode.status({fill:\"blue\", shape:\"ring\", text:\"Nachtentladung gestartet\"});\nmsg.payload = 3;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 1960,
+        "wires": [
+            [
+                "33bcea0aa7f86687"
+            ]
+        ]
+    },
+    {
+        "id": "a1b2c3d4e5f60006",
+        "type": "inject",
+        "z": "b7965650bcd47c18",
+        "name": "Zyklische Pruefung (30s)",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "30",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 2020,
+        "wires": [
+            [
+                "a1b2c3d4e5f60007"
+            ]
+        ]
+    },
+    {
+        "id": "a1b2c3d4e5f60007",
+        "type": "function",
+        "z": "b7965650bcd47c18",
+        "name": "Nachtentladung Regelung",
+        "func": "// === Nachtentladung 00:00 - 07:00 auf SOC_TARGET, kein Netzbezug ===\nconst CAPACITY_WH = 15000; // <-- Akku-Nutzkapazitaet in Wh anpassen!\nconst P_MAX       = 4000;  // max. Entladeleistung Wechselrichter (W)\nconst SOC_TARGET  = 10;    // Ziel-SoC (%)\nconst GRID_TARGET = 0;     // Ziel-Netzleistung (W); 0 = kein Bezug\n\nconst now = new Date();\nconst minutes = now.getHours() * 60 + now.getMinutes();\nconst inWindow = (minutes >= 0 && minutes < 7 * 60);\n\n// Ausserhalb 00:00-07:00 nichts tun (Stop uebernimmt der 07:00-Inject)\nif (!inWindow) {\n    node.status({});\n    return [null, null];\n}\n\nconst soc  = Number(flow.get(\"ESS_SoC\"));\nconst grid = Number(flow.get(\"GridPower\")) || 0;   // + = Netzbezug\nlet   cur  = Number(flow.get(\"NightDischargePower\")) || 0;\n\n// Ziel erreicht -> Entladung stoppen, ESS zurueck auf Optimized (1)\nif (!isNaN(soc) && soc <= SOC_TARGET) {\n    flow.set(\"NightDischargePower\", 0);\n    flow.set(\"PowerL1SetPoint\", 0);\n    node.status({fill:\"green\", shape:\"dot\", text:\"Ziel \" + SOC_TARGET + \"% erreicht\"});\n    return [ {payload: 0}, {payload: 1} ];\n}\n\n// 1) geplante Entladeleistung, um bis 07:00 auf SOC_TARGET zu kommen\nconst hoursLeft = Math.max((7 * 60 - minutes) / 60, 0.1);\nconst energyWh  = Math.max(((isNaN(soc) ? 100 : soc) - SOC_TARGET) / 100 * CAPACITY_WH, 0);\nconst planned   = energyWh / hoursLeft;\n\n// 2) Hauslast-Deckung: aktuelle Last ~ aktuelle Entladung + Netzbezug\n//    Entladung mind. so gross wie Last -> kein Netzbezug\nconst coverLoad = cur + (grid - GRID_TARGET);\n\n// Groesserer der beiden Werte, auf Wechselrichtergrenze begrenzt\nlet mag = Math.max(planned, coverLoad, 0);\nmag = Math.min(mag, P_MAX);\n\nflow.set(\"NightDischargePower\", mag);\nflow.set(\"PowerL1SetPoint\", mag); // haelt 2s-Apply-Loop konsistent (HA pausiert)\n\nnode.status({fill:\"blue\", shape:\"dot\",\n    text:\"SoC \" + soc + \"% | Soll \" + Math.round(mag) + \"W | Netz \" + Math.round(grid) + \"W\"});\n\n// Ausgang 1: AcPowerSetpoint (negativ = entladen)\n// Ausgang 2: ESS-Mode 3 (External control) erneut bestaetigen\nreturn [ {payload: -Math.round(mag)}, {payload: 3} ];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 2020,
+        "wires": [
+            [
+                "8086dd58cda4157a"
+            ],
+            [
+                "33bcea0aa7f86687"
+            ]
+        ]
+    },
+    {
+        "id": "a1b2c3d4e5f60004",
+        "type": "inject",
+        "z": "b7965650bcd47c18",
+        "name": "Stop 07:00",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 07 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 2080,
+        "wires": [
+            [
+                "a1b2c3d4e5f60005"
+            ]
+        ]
+    },
+    {
+        "id": "a1b2c3d4e5f60005",
+        "type": "function",
+        "z": "b7965650bcd47c18",
+        "name": "Stop Nachtentladung",
+        "func": "// Entladung beenden: Sollwert 0, ESS zurueck auf Optimized (1)\nflow.set(\"NightDischargePower\", 0);\nflow.set(\"PowerL1SetPoint\", 0);\nnode.status({fill:\"grey\", shape:\"ring\", text:\"Nachtentladung beendet\"});\n// Ausgang 1: AcPowerSetpoint = 0 ; Ausgang 2: ESS-Mode 1\nreturn [ {payload: 0}, {payload: 1} ];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 2080,
+        "wires": [
+            [
+                "8086dd58cda4157a"
+            ],
+            [
+                "33bcea0aa7f86687"
+            ]
+        ]
+    },
+    {
+        "id": "a1b2c3d4e5f60008",
+        "type": "victron-input-gridmeter",
+        "z": "b7965650bcd47c18",
+        "service": "com.victronenergy.grid/40",
+        "path": "/Ac/Power",
+        "serviceObj": {
+            "service": "com.victronenergy.grid/40",
+            "name": "VM-3P75CT HQ2419PKMRG"
+        },
+        "pathObj": {
+            "path": "/Ac/Power",
+            "type": "float",
+            "name": "Power (W)"
+        },
+        "name": "Grid Power -> flow.GridPower",
+        "onlyChanges": false,
+        "x": 150,
+        "y": 2160,
+        "wires": [
+            [
+                "a1b2c3d4e5f60009"
+            ]
+        ]
+    },
+    {
+        "id": "a1b2c3d4e5f60009",
+        "type": "change",
+        "z": "b7965650bcd47c18",
+        "name": "set flow.GridPower",
+        "rules": [
+            {
+                "t": "set",
+                "p": "GridPower",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 2160,
+        "wires": [
+            []
+        ]
+    }
+]
