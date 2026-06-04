@@ -44,7 +44,7 @@ In der Function **`Nachtentladung Regelung`** oben anpassen:
 const CAPACITY_WH = 16000; // Akku-Nutzkapazität in Wh
 const P_MAX       = 3800;  // max. Entladeleistung des Wechselrichters (W)
 const SOC_TARGET  = 10;    // Ziel-SoC (%)
-const GRID_TARGET = 0;     // Ziel-Netzleistung (W); 0 = kein Bezug
+const GRID_TARGET = -50;   // Ziel-Netzleistung (W); negativ = Einspeise-Puffer (nie Bezug)
 ```
 
 - **HomeAssistant-Steuerung im Fenster 00:00–07:00 pausieren.** Die bestehende
